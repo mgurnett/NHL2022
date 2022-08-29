@@ -4,7 +4,6 @@ import json
 import requests
 import pandas as pd
 from Read_API import *
-from PlayerClass import *
 
 class Game:
     ''' The Game class for a single game '''
