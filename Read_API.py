@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-# cd ~/Documents/GitHub/NHL2022 && source NHL2022/bin/activate
+# cd ~/Documents/GitHub/NHL2022 && source NHL2022_venv/bin/activate
+# https://gitlab.com/dword4/nhlapi/-/blob/master/stats-api.md#teams
 
 import json
 import requests
@@ -17,7 +18,6 @@ def read_API(section):
     else:
         data = r.json()
         return data
-
  
 
 if __name__ == '__main__':

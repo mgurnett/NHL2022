@@ -8,11 +8,25 @@ from PlayerClass import *
 from TeamClass import *
 
 def get_league ():
-    league = [] # this is a list
-    packages_json = read_API ('teams')
-    print (packages_json)
+    team_list = [] # this is a list
+    url = 'teams'
+#     url = 'teams?season=20212022'
+    packages_json = read_API (url)
+    for index in range (len(packages_json['teams'])):
+        team_id = packages_json['teams'][index]['id']
+        current_team = Team (team_id)
+        current_team.name = packages_json['teams'][index]['name']
+        current_team.abbreviation = packages_json['teams'][index]['abbreviation']
+        current_team.teamName = packages_json['teams'][index]['teamName']
+        current_team.locationName = packages_json['teams'][index]['locationName']
+        current_team.shortName = packages_json['teams'][index]['shortName']
+        current_team.division = packages_json['teams'][index]['division']['name']
+        current_team.venue = packages_json['teams'][index]['venue']['name']
+#         current_team.roster = get_roster (team_id)
+        team_list.append (current_team)
+        print (current_team)
+    return (team_list)        
         
-
-
 if __name__ == '__main__':
-    get_league ()
+    league = get_league ()
+    print (league)
