@@ -6,8 +6,6 @@ import pandas as pd
 from Read_API import *
 from PlayerClass import *
 
-https://statsapi.web.nhl.com/api/v1/schedule?teamId=22&startDate=2022-09-25&endDate=2022-10-07
-
 class Game:
     ''' The Game class for a single game '''
     def __init__ (self, id):
@@ -36,4 +34,12 @@ class Game:
         return (f'{self.name} of the {self.division} who play in {self.venue} and have played {self.games_played} games and have {self.points} points')
 
 if __name__ == '__main__':
-    
+    dates = []
+    url = "schedule?teamId=22&startDate=2022-09-25&endDate=2022-10-07"
+    schedule_json = read_API(url)
+    numb_of_games = json.dumps (schedule_json['totalItems'])
+    for game_numb in range (int(numb_of_games)):
+        current_date = json.dumps (schedule_json['dates'][game_numb]['date'])
+        print (game_numb, " - ", current_date)
+        dates.append (current_date)
+    print (dates)
