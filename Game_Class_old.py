@@ -110,19 +110,19 @@ def load_api_games ():
     return (sche)
 
 def debug_var (name, var):
-    print (f'{name} is {var} and is of type {type(var)}')
+    print (f'*****--->>{name} is {var} and is of type {type(var)}')
     return
 
 if __name__ == '__main__':
-    schedule = load_api_games ()
-    if schedule != []:
-        for game in schedule.games:
-            game.live_games()
-            game.today_games()
-            print (schedule)
-
-    else:
-     print ('FAILURE')
+#     schedule = load_api_games ()
+#     if schedule != []:
+#         for game in schedule.games:
+#             game.live_games()
+#             game.today_games()
+#             print (schedule)
+# 
+#     else:
+#      print ('FAILURE')
 
     # schedule.games_on_a_day()
     # print (schedule)
