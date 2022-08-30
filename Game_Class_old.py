@@ -114,18 +114,18 @@ def debug_var (name, var):
     return
 
 if __name__ == '__main__':
-#     schedule = load_api_games ()
-#     if schedule != []:
-#         for game in schedule.games:
-#             game.live_games()
-#             game.today_games()
-#             print (schedule)
-# 
-#     else:
-#      print ('FAILURE')
+    schedule = load_api_games ()
+    if schedule != []:
+        for game in schedule.games:
+            game.live_games()
+            game.today_games()
+            print (schedule)
 
-    # schedule.games_on_a_day()
-    # print (schedule)
+    else:
+     print ('FAILURE')
+
+    schedule.games_on_a_day()
+    print (schedule)
     the_game_date = datetime.now() - timedelta(days=1)
     debug_var ('the_game_date',the_game_date)
     print (schedule.games_on_a_day(the_game_date))
