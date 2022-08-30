@@ -2,7 +2,7 @@ from Read_API import *
 from datetime import datetime, timedelta
 import pytz
 
-year = '2020'
+year = '2021'
 season_type = '02'
 local_tz = pytz.timezone('America/Edmonton')
 
@@ -88,7 +88,7 @@ class AllGames:
 def load_api_games ():
     '''get all games from API'''
     schedule = []
-    url = 'schedule?startDate=2021-01-01&endDate=2021-07-01'
+    url = 'schedule?teamId=22&startDate=2022-01-01&endDate=2022-11-01'
     data = read_API(url)
     for api_dates in data['dates']:
         for api_games in api_dates['games']:
@@ -104,7 +104,7 @@ def load_api_games ():
                 current_game.home_point = api_games['teams']['home']['score']
                 current_game.away_point = api_games['teams']['away']['score']
             schedule.append (current_game)
-            # print (current_game)
+            print (current_game)
 
     sche = AllGames (schedule)
     return (sche)
@@ -115,14 +115,14 @@ def debug_var (name, var):
 
 if __name__ == '__main__':
     schedule = load_api_games ()
-    # if schedule != []:
-    #     for game in schedule.games:
-    #         game.live_games()
-    #         game.today_games()
-    #     print (schedule)
-        
-    # else:
-    #     print ('FAILURE')
+    if schedule != []:
+        for game in schedule.games:
+            game.live_games()
+            game.today_games()
+            print (schedule)
+
+    else:
+     print ('FAILURE')
 
     # schedule.games_on_a_day()
     # print (schedule)
