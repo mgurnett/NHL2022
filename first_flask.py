@@ -1,5 +1,6 @@
 from flask import Flask
 from PlayerClass import *
+from League import *
 
 app = Flask (__name__)
 
@@ -15,5 +16,9 @@ def player():
 
     return str(current_player)
 
-if __name__ == '__main__':
+@app.route ('/teams')
+def teams():
+    return str(get_league ())
 
+if __name__ == '__main__':
+    pass
