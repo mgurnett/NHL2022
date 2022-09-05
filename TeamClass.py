@@ -63,7 +63,7 @@ class Team:
         roster.append(roster_df['person.id'])
         for r in roster_df['person.id']:
             active_roster.append(r)
-#             current_player = Player (r)
+            current_player = Player (r)
 #             print (current_player)
 #         print (active_roster)
         return active_roster
@@ -73,14 +73,15 @@ if __name__ == '__main__':
 #     url = 'teams/22?season=20212022'
 #     packages_json = read_API (url)
     current_team = Team (22)
-    print (current_team)
+#     current_team.roster = Team.get_roster
+    print (current_team.roster)
 #     print (current_team.goal_for)
     
-    url = 'teams/22/stats?season=20212022'
-    packages_json = read_API (url)
-    packages_str = json.dumps (packages_json['stats'][0]['splits'][0], indent =2)
-#     packages_str = json.dumps (packages_json['teams'][0]['name'], indent =2)
-    print (packages_str)
+#     url = 'teams/22/stats?season=20212022'
+#     packages_json = read_API (url)
+#     packages_str = json.dumps (packages_json['stats'][0]['splits'][0], indent =2)
+# #     packages_str = json.dumps (packages_json['teams'][0]['name'], indent =2)
+#     print (packages_str)
 
 #     current_player = Player (8480802)
 #     print (current_player)    

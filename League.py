@@ -22,7 +22,7 @@ def get_league ():
         current_team.shortName = packages_json['teams'][index]['shortName']
         current_team.division = packages_json['teams'][index]['division']['name']
         current_team.venue = packages_json['teams'][index]['venue']['name']
-#         current_team.roster = Team.get_roster (team_id)
+        current_team.roster = Team.get_roster (team_id)
         team_list.append (current_team)
         print (current_team)
     return (team_list)        
