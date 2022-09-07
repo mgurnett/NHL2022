@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
 
+from michael_debug import *
 import json
 import requests
 import pandas as pd
 from Read_API import *
 from PlayerClass import *
 
+NHL_season = '20212022'
+
 class Team:
     ''' The Team class for a single team '''
-    def __init__ (self, id):
+    def __init__ (self, id, season):
         self.id = id
+        self.season = NHL_season
         self.name = ""
         self.teamName = ""
         self.abbreviation = ""
@@ -31,16 +35,18 @@ class Team:
 #         self.get_roster ()
 
     def __str__ (self):
-        return (f'{self.name} of the {self.division} who play in {self.venue} and have played {self.games_played} games and have {self.points} points')
+        team_info = (f'{self.name} of the {self.division} who play in {self.venue} and have {self.points} points in the {self.season} season.\n')
+        team_stats = (f'They have have played {self.games_played} games with {self.win} wins and {self.loss} losses with {self.otloss} OT losses\n')
+        return (team_info + team_stats)
    
     def team_stats (self):
-        url = (f'teams/{self.id}?season=20222023')  #team info
+        url = (f'teams/{self.id}?season={self.season}')  #team info
         team_json = read_API (url)
         self.name = team_json['teams'][0]['name'] # better way to do is to get all the data in a hash and then pull the data out.
         self.division = team_json['teams'][0]['division']['name']
         self.venue = team_json['teams'][0]['venue']['name']
         
-        url = (f'teams/{self.id}/stats?season=20222023')  #team stats
+        url = (f'teams/{self.id}/stats?season={self.season}')  #team stats
         team_json = read_API (url)
         self.games_played = team_json['stats'][0]['splits'][0]['stat']['gamesPlayed']
         self.points = team_json['stats'][0]['splits'][0]['stat']['pts']
@@ -66,25 +72,18 @@ def get_roster(team_id):
 #         print (active_roster)
     return active_roster
     
-def get_teams ():
+def get_teams (season):
     team_list = [] # this is a list
 #     url = 'teams'
-    url = 'teams?season=20222023'
+    url = (f'teams?season={season}')
     packages_json = read_API (url)
     for index in range (len(packages_json['teams'])):
         team_id = packages_json['teams'][index]['id']
-        current_team = Team (team_id)
+        current_team = Team (team_id, season)
         team_list.append (current_team)
     return (team_list)
     
 if __name__ == '__main__':
-    # url = 'schedule?date=2021-03-27'
-#     url = 'teams/22?season=20212022'
-#     packages_json = read_API (url)
-#     current_team = Team (22)
-#     current_team.roster = Team.get_roster
-#     print (current_team.roster)
-#     print (current_team.goal_for)
-    league = get_teams ()  #league is the full iteration of Class teams.
+    league = get_teams (NHL_season)  #league is the full iteration of Class teams.
     for team in league:
         print (team)
