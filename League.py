@@ -2,30 +2,50 @@
 
 import json
 import requests
-import pandas as pd
+# import pandas as pd
 from Read_API import *
-from PlayerClass import *
-from TeamClass import *
+# from PlayerClass import *
+# from TeamClass import *
 
-def get_league ():
-    team_list = [] # this is a list
-#     url = 'teams'
-    url = 'teams?season=20222023'
-    packages_json = read_API (url)
-    for index in range (len(packages_json['teams'])):
-        team_id = packages_json['teams'][index]['id']
-        current_team = Team (team_id)
-        current_team.name = packages_json['teams'][index]['name']
-        current_team.abbreviation = packages_json['teams'][index]['abbreviation']
-        current_team.teamName = packages_json['teams'][index]['teamName']
-        current_team.locationName = packages_json['teams'][index]['locationName']
-        current_team.shortName = packages_json['teams'][index]['shortName']
-        current_team.division = packages_json['teams'][index]['division']['name']
-        current_team.venue = packages_json['teams'][index]['venue']['name']
-        current_team.roster = Team.get_roster (team_id)
-        team_list.append (current_team)
-        print (current_team)
-    return (team_list)        
+class League ():
+    ''' The League class for all teams '''
+    def __init__ (self):
+        self.id = id
+        self.name = ""
+        self.teamName = ""
+        self.abbreviation = ""
+        self.locationName = ""
+        self.shortName = ""
+        self.division = ""
+        self.conference = ""
+        self.venue = ""
+        self.get_teams ()
+
+    def get_teams (self):
+        team_list = [] # this is a list
+    #     url = 'teams'
+        url = 'teams?season=20222023'
+        packages_json = read_API (url)
+        for index in range (len(packages_json['teams'])):
+            self.id = packages_json['teams'][index]['id']
+#             current_team = Team (team_id)
+            self.name = packages_json['teams'][index]['name']
+            self.abbreviation = packages_json['teams'][index]['abbreviation']
+            self.teamName = packages_json['teams'][index]['teamName']
+            self.locationName = packages_json['teams'][index]['locationName']
+            self.shortName = packages_json['teams'][index]['shortName']
+            self.division = packages_json['teams'][index]['division']['name']
+            self.venue = packages_json['teams'][index]['venue']['name']
+            team_list.append (self)
+            print (team_list)
+        return (team_list) 
+
+def print_teams (team_list):
+    for team in team_list:
+        print (f'{self.name} of the {self.division} who play in {self.venue}')
+               
         
 if __name__ == '__main__':
-    league = get_league ()
+    league = League ()
+#     json_league = json.dumps(league.__dict__)
+    print_teams (league)
