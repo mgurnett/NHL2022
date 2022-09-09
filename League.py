@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-import json
-import requests
+import jsonpickle # import json is in jsonpickle
+# see http://jsonpickle.github.io/ for documentation
 # import pandas as pd
 from Read_API import *
 # from PlayerClass import *
@@ -19,7 +19,8 @@ class League ():
         self.division = ""
         self.conference = ""
         self.venue = ""
-        self.get_teams ()
+        self.teams = []
+        self.teams = self.get_teams ()
 
     def get_teams (self):
         team_list = [] # this is a list
@@ -28,7 +29,6 @@ class League ():
         packages_json = read_API (url)
         for index in range (len(packages_json['teams'])):
             self.id = packages_json['teams'][index]['id']
-#             current_team = Team (team_id)
             self.name = packages_json['teams'][index]['name']
             self.abbreviation = packages_json['teams'][index]['abbreviation']
             self.teamName = packages_json['teams'][index]['teamName']
@@ -37,7 +37,7 @@ class League ():
             self.division = packages_json['teams'][index]['division']['name']
             self.venue = packages_json['teams'][index]['venue']['name']
             team_list.append (self)
-            print (team_list)
+            print (self.name)
         return (team_list) 
 
 def print_teams (team_list):
@@ -47,5 +47,7 @@ def print_teams (team_list):
         
 if __name__ == '__main__':
     league = League ()
-#     json_league = json.dumps(league.__dict__)
-    print_teams (league)
+#     json_league = json.dumps(league)
+#     print (json_league)
+    frozen = jsonpickle.encode(league)
+    print (frozen)

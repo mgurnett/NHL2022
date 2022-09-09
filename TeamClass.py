@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 from michael_debug import *
-import json
-import requests
-import pandas as pd
-from Read_API import *
+import jsonpickle # import json is in jsonpickle
+# see http://jsonpickle.github.io/ for documentation
+# import pandas as pd
+from Read_API import *  # import requests is in Read_API
 from PlayerClass import *
 
 NHL_season = '20212022'
@@ -84,6 +84,8 @@ def get_teams (season):
     return (team_list)
     
 if __name__ == '__main__':
-    league = get_teams (NHL_season)  #league is the full iteration of Class teams.
+    league = get_teams (NHL_season)  #league is the full iteration of Class teams as a list
     for team in league:
         print (team)
+        frozen = jsonpickle.encode(team)
+        print (frozen)
