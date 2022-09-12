@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-''' So this works for writting this to files, but is not correct.  The data that leagues gets is not accesable.'''
-
+from michael_debug import debug_var
+from json_write import *
 # import pandas as pd
 from Read_API import *
 from json_write import *
@@ -34,9 +34,9 @@ class Team:
     def __str__ (self):
         team_info = (f'{self.name} of the {self.division} who play in {self.venue} in the {self.season} season.\n')
         team_stats = (f'They have have played {self.games_played} games with {self.win} wins and {self.loss} \
-                        losses with {self.otloss} OT losses for {self.points} points\n')
-#         return (team_info + team_stats)
-        return (team_info)
+losses with {self.otloss} OT losses for {self.points} points\n')
+        return (team_info + team_stats)
+#         return (team_info)
         
 class AllTeams ():
     ''' The League class for all teams '''
@@ -45,7 +45,11 @@ class AllTeams ():
         
     def __str__ (self):
         for x in self.teams:
+#             debug_var ("x.id", x.id)
             print (x)
+
+    def to_json(self):
+        return json.dumps(self, default=lambda obj: self.__dict__, indent=4)
     
 def load_team_info (season):
     leag = []
@@ -71,14 +75,9 @@ def update_team_stats (leag, season):
     for team in leag.teams:
 #         url = (f'teams/{team.id}?expand=team.stats&season={season}')  team stats
         url = (f'teams/{team.id}/stats?season={season}')
-        print (url)
         team_json = read_API (url)
-        print (team.name)
-        packages_str = json.dumps (team_json['stats'][0]['splits'][0]['stat'], indent =2)
-        print (packages_str)
-        print (str(packages_str['gamesPlayed']))
-        team.games_played = int(packages_str['gamesPlayed'])
-        team.points = team_json['stats']['splits']['stat']['pts']
+        team.games_played = team_json['stats'][0]['splits'][0]['stat']['gamesPlayed']
+        team.points = team_json['stats'][0]['splits'][0]['stat']['pts']
         team.win = team_json['stats'][0]['splits'][0]['stat']['wins']
         team.loss = team_json['stats'][0]['splits'][0]['stat']['losses']
         team.otloss = team_json['stats'][0]['splits'][0]['stat']['ot']
@@ -92,10 +91,12 @@ if __name__ == '__main__':
     NHL_season = '20212022'
 
     league = load_team_info (NHL_season)
+#     json_data = json.dumps(league, lambda o: o.__dict__, indent=4)
+
+    json_league = league.to_json ()
+    
+    
+#     write_json (league, f'NHL_{NHL_season}')
 
     league = update_team_stats (league, NHL_season)
     print (league)
-    
-    
-#     json_league = league.to_json ()
-#     write_json (json_league, "team_info")
