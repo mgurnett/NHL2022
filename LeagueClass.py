@@ -4,13 +4,14 @@ from michael_debug import debug_var
 from json_write import *
 # import pandas as pd
 from Read_API import *
-from json_write import *
+
+# There will be a team class and player class but no league class for now.
 
 class Team:
     ''' The Team class for a single team '''
     def __init__ (self, id, season):
         self.id = id
-        self.season = NHL_season
+        self.season = season
         self.name = ""
         self.teamName = ""
         self.abbreviation = ""
@@ -38,45 +39,37 @@ losses with {self.otloss} OT losses for {self.points} points\n')
         return (team_info + team_stats)
 #         return (team_info)
         
-class AllTeams ():
-    ''' The League class for all teams '''
-    def __init__ (self, TeamObjects):
-        self.teams = list (TeamObjects)
-        
-    def __str__ (self):
-        for x in self.teams:
-#             debug_var ("x.id", x.id)
-            print (x)
-
-    def to_json(self):
-        return json.dumps(self, default=lambda obj: self.__dict__, indent=4)
-    
 def load_team_info (season):
     leag = []
-    team_list = []
+
     url = (f'teams?season={season}')
     packages_json = read_API (url)
-    for index in range (len(packages_json['teams'])):
-        team_id = packages_json['teams'][index]['id']
-        current_team = Team (team_id, season)
-        current_team.name = packages_json['teams'][index]['name']
-        current_team.abbreviation = packages_json['teams'][index]['abbreviation']
-        current_team.teamName = packages_json['teams'][index]['teamName']
-        current_team.locationName = packages_json['teams'][index]['locationName']
-        current_team.shortName = packages_json['teams'][index]['shortName']
-        current_team.division = packages_json['teams'][index]['division']['name']
-        current_team.venue = packages_json['teams'][index]['venue']['name']
-        team_list.append (current_team)
-        print (help (current_team))
-        print (current_team.__dict__)
-    leag = AllTeams (team_list)
+    print (packages_json)
+    current_team = json.loads (packages_json)
+#     for index in range (len(packages_json['teams'])):
+#         team_id = packages_json['teams'][index]['id']
+#         current_team = Team (team_id, season)
+#         current_team.name = packages_json['teams'][index]['name']
+#         current_team.abbreviation = packages_json['teams'][index]['abbreviation']
+#         current_team.teamName = packages_json['teams'][index]['teamName']
+#         current_team.locationName = packages_json['teams'][index]['locationName']
+#         current_team.shortName = packages_json['teams'][index]['shortName']
+#         current_team.division = packages_json['teams'][index]['division']['name']
+#         current_team.venue = packages_json['teams'][index]['venue']['name']
+#         jsonString = json.dumps(current_team())
+#         print (jsonString)
+#         leag.append (current_team)
+#         
+#     print (*leag)
+#     jsonString = json.dumps(leag)
+    print (current_team)
     return (leag)
         
 def update_team_stats (leag, season):
 
-    for team in leag.teams:
+    for team in leag:
 #         url = (f'teams/{team.id}?expand=team.stats&season={season}')  team stats
-        url = (f'teams/{team.id}/stats?season={season}')
+        url = (f'teams/{int(team.id)}/stats?season={season}')
         team_json = read_API (url)
         team.games_played = team_json['stats'][0]['splits'][0]['stat']['gamesPlayed']
         team.points = team_json['stats'][0]['splits'][0]['stat']['pts']
@@ -89,19 +82,10 @@ def update_team_stats (leag, season):
     return (leag)
                
 if __name__ == '__main__':
-
     NHL_season = '20212022'
 
     league = load_team_info (NHL_season)
-    print (help (league))
-    print (league.__dict__)
-
-#     json_data = json.dumps(league, lambda o: o.__dict__, indent=4)
-
-#     json_league = league.to_json ()
-    
-    
-#     write_json (league, f'NHL_{NHL_season}')
-
-#     league = update_team_stats (league, NHL_season)
+#     print (type(league))
 #     print (league)
+#     write_json (league, "NHL_teams")
+#     league = update_team_stats (league, NHL_season)
