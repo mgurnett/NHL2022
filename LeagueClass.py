@@ -67,6 +67,8 @@ def load_team_info (season):
         current_team.division = packages_json['teams'][index]['division']['name']
         current_team.venue = packages_json['teams'][index]['venue']['name']
         team_list.append (current_team)
+        print (help (current_team))
+        print (current_team.__dict__)
     leag = AllTeams (team_list)
     return (leag)
         
@@ -91,12 +93,15 @@ if __name__ == '__main__':
     NHL_season = '20212022'
 
     league = load_team_info (NHL_season)
+    print (help (league))
+    print (league.__dict__)
+
 #     json_data = json.dumps(league, lambda o: o.__dict__, indent=4)
 
-    json_league = league.to_json ()
+#     json_league = league.to_json ()
     
     
 #     write_json (league, f'NHL_{NHL_season}')
 
-    league = update_team_stats (league, NHL_season)
-    print (league)
+#     league = update_team_stats (league, NHL_season)
+#     print (league)
