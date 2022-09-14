@@ -6,7 +6,6 @@ def write_json (json_string, file_name):
     
     with open(full_file_name, 'w', encoding='utf-8') as outfile:
         outfile.write(json_string)
-        json.dump(json_string, outfile, ensure_ascii=False, indent=4)
         
 def read_json (file_name):
     # needs to be of type <class 'str'>
