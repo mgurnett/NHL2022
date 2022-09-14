@@ -38,29 +38,53 @@ class Team:
 losses with {self.otloss} OT losses for {self.points} points\n')
         return (team_info + team_stats)
 #         return (team_info)
+
+#https://stackoverflow.com/questions/50811101/convert-list-of-class-objects-into-json-in-python-or-django for help with this
+    def to_dict(self):
+            return {"id": self.id,
+                    "name": self.name,
+                    "season": self.season,
+                    "teamName": self.teamName,
+                    "abbreviation": self.abbreviation,
+                    "locationName": self.locationName,
+                    "shortName": self.shortName,
+                    "division": self.division,
+                    "conference": self.conference,
+                    "venue": self.venue,
+                    "win": self.win,
+                    "loss": self.loss,
+                    "otloss": self.otloss,
+                    "points": self.points,
+                    "games_played": self.games_played,
+                    "point_percent": self.point_percent,
+                    "goal_for": self.goal_for,
+                    "goal_against": self.goal_against
+                    }
         
 def load_team_info (season):
     leag = []
     url = (f'teams?season={season}')
-    packages_json = read_API (url)
-    for index in range (len(packages_json['teams'])):
-        team_id = packages_json['teams'][index]['id']
+    teams = read_API (url)
+        
+    for team in teams ['teams']:
+        team_id = team ['id']
         current_team = Team (team_id, season)
-        current_team.name = packages_json['teams'][index]['name']
-        current_team.abbreviation = packages_json['teams'][index]['abbreviation']
-        current_team.teamName = packages_json['teams'][index]['teamName']
-        current_team.locationName = packages_json['teams'][index]['locationName']
-        current_team.shortName = packages_json['teams'][index]['shortName']
-        current_team.division = packages_json['teams'][index]['division']['name']
-        current_team.venue = packages_json['teams'][index]['venue']['name']
+        current_team.name = team ['name']
+        current_team.abbreviation = team ['abbreviation']
+        current_team.teamName = team ['teamName']
+        current_team.locationName = team ['locationName']
+        current_team.shortName = team ['shortName']
+        current_team.division = team ['division']['name']
+        current_team.venue = team ['venue']['name']
         leag.append (current_team)
-        print (current_team)
+#         print (current_team, type(current_team))
     return (leag)
         
 def update_team_stats (leag, season):
 
     for team in leag:
 #         url = (f'teams/{team.id}?expand=team.stats&season={season}')  team stats
+
         url = (f'teams/{int(team.id)}/stats?season={season}')
         team_json = read_API (url)
         team.games_played = team_json['stats'][0]['splits'][0]['stat']['gamesPlayed']
@@ -76,8 +100,7 @@ def update_team_stats (leag, season):
 if __name__ == '__main__':
     NHL_season = '20212022'
 
-    league = load_team_info (NHL_season)
-#     print (type(league))
-    print (league)
-#     write_json (league, "NHL_teams")
-#     league = update_team_stats (league, NHL_season)
+    league = load_team_info (NHL_season) # league is a <class 'list'> of <class 'Team'>
+    teams = [team.to_dict() for team in league] # build a list of dicts from your objects
+    json_data = json.dumps ({'teams': teams}, indent=2)  # serialize the whole thing
+    print (json_data)
