@@ -41,28 +41,20 @@ losses with {self.otloss} OT losses for {self.points} points\n')
         
 def load_team_info (season):
     leag = []
-
     url = (f'teams?season={season}')
     packages_json = read_API (url)
-    print (packages_json)
-    current_team = json.loads (packages_json)
-#     for index in range (len(packages_json['teams'])):
-#         team_id = packages_json['teams'][index]['id']
-#         current_team = Team (team_id, season)
-#         current_team.name = packages_json['teams'][index]['name']
-#         current_team.abbreviation = packages_json['teams'][index]['abbreviation']
-#         current_team.teamName = packages_json['teams'][index]['teamName']
-#         current_team.locationName = packages_json['teams'][index]['locationName']
-#         current_team.shortName = packages_json['teams'][index]['shortName']
-#         current_team.division = packages_json['teams'][index]['division']['name']
-#         current_team.venue = packages_json['teams'][index]['venue']['name']
-#         jsonString = json.dumps(current_team())
-#         print (jsonString)
-#         leag.append (current_team)
-#         
-#     print (*leag)
-#     jsonString = json.dumps(leag)
-    print (current_team)
+    for index in range (len(packages_json['teams'])):
+        team_id = packages_json['teams'][index]['id']
+        current_team = Team (team_id, season)
+        current_team.name = packages_json['teams'][index]['name']
+        current_team.abbreviation = packages_json['teams'][index]['abbreviation']
+        current_team.teamName = packages_json['teams'][index]['teamName']
+        current_team.locationName = packages_json['teams'][index]['locationName']
+        current_team.shortName = packages_json['teams'][index]['shortName']
+        current_team.division = packages_json['teams'][index]['division']['name']
+        current_team.venue = packages_json['teams'][index]['venue']['name']
+        leag.append (current_team)
+        print (current_team)
     return (leag)
         
 def update_team_stats (leag, season):
@@ -86,6 +78,6 @@ if __name__ == '__main__':
 
     league = load_team_info (NHL_season)
 #     print (type(league))
-#     print (league)
+    print (league)
 #     write_json (league, "NHL_teams")
 #     league = update_team_stats (league, NHL_season)
