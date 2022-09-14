@@ -96,7 +96,7 @@ def update_team_stats (leag, season):
         team.point_percent = team_json['stats'][0]['splits'][0]['stat']['ptPctg']
         team.goal_for = team_json['stats'][0]['splits'][0]['stat']['goalsPerGame']
         team.goal_against = team_json['stats'][0]['splits'][0]['stat']['goalsAgainstPerGame']
-        print (team)
+#         print (team)
     return (leag)
                
 if __name__ == '__main__':

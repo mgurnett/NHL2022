@@ -29,7 +29,6 @@ class Team:
         self.goal_for = 0
         self.goal_against = 0
         self.roster = []
-#         self.team_stats ()
 #         self.get_roster ()
 
     def __str__ (self):
@@ -61,24 +60,35 @@ losses with {self.otloss} OT losses for {self.points} points\n')
                     "goal_against": self.goal_against
                     }
         
-def load_team_info (season):
-    leag = []
-    url = (f'teams?season={season}')
-    teams = read_API (url)
+class AllTeams:
+    def __init__ (self, season):
+        self.season = season
+        self.allteams = self.load_team_info (self.season)
         
-    for team in teams ['teams']:
-        team_id = team ['id']
-        current_team = Team (team_id, season)
-        current_team.name = team ['name']
-        current_team.abbreviation = team ['abbreviation']
-        current_team.teamName = team ['teamName']
-        current_team.locationName = team ['locationName']
-        current_team.shortName = team ['shortName']
-        current_team.division = team ['division']['name']
-        current_team.venue = team ['venue']['name']
-        leag.append (current_team)
-#         print (current_team, type(current_team))
-    return (leag)
+    def load_team_info (self, season):
+        leag = []
+        url = (f'teams?season={season}')
+        teams = read_API (url)
+            
+        for team in teams ['teams']:
+            team_id = team ['id']
+            current_team = Team (team_id, season)
+            current_team.name = team ['name']
+            current_team.abbreviation = team ['abbreviation']
+            current_team.teamName = team ['teamName']
+            current_team.locationName = team ['locationName']
+            current_team.shortName = team ['shortName']
+            current_team.division = team ['division']['name']
+            current_team.venue = team ['venue']['name']
+    #         print (current_team, type(current_team))
+            teams_dict = current_team.to_dict()
+            leag.append (teams_dict)
+        json_string = json.dumps ({'teams': leag}, indent=2)  # serialize the whole thing
+        print (type(json_string ))
+        return (json_string)
+
+    
+    
         
 def update_team_stats (leag, season):
 
@@ -96,20 +106,28 @@ def update_team_stats (leag, season):
         team.point_percent = team_json['stats'][0]['splits'][0]['stat']['ptPctg']
         team.goal_for = team_json['stats'][0]['splits'][0]['stat']['goalsPerGame']
         team.goal_against = team_json['stats'][0]['splits'][0]['stat']['goalsAgainstPerGame']
-        print (team)
+#         print (team)
     return (leag)
                
 if __name__ == '__main__':
     NHL_season = '20212022'
+    
+    league = AllTeams (NHL_season)
+    write_json (league, f'NHL_teams_{NHL_season}_info')
+    
+    '''
 
     league = load_team_info (NHL_season) # league is a <class 'list'> of <class 'Team'>
     teams = [team.to_dict() for team in league] # build a list of dicts from your objects
     json_string = json.dumps ({'teams': teams}, indent=2)  # serialize the whole thing
 #     print (json_string)
-    write_json (json_string, f'NHL_teams_{NHL_season}_info')
+
     
     league = update_team_stats (league, NHL_season) # league is a <class 'list'> of <class 'Team'>
     teams = [team.to_dict() for team in league] # build a list of dicts from your objects
     json_string = json.dumps ({'teams': teams}, indent=2)  # serialize the whole thing
+    
     print (json_string)
     write_json (json_string, f'NHL_teams_{NHL_season}_stats')
+    
+    '''
