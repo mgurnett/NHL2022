@@ -26,14 +26,15 @@ class Team:
         self.goal_for = 0
         self.goal_against = 0
         self.roster = []
+        self.get_roster ()
 #         self.team_stats ()
-#         self.get_roster ()
 
     def __str__ (self):
         team_info = (f'{self.name} of the {self.division} who play in {self.venue} in the {self.season} season.\n')
         team_stats = (f'They have have played {self.games_played} games with {self.win} wins and {self.loss} \
 losses with {self.otloss} OT losses for {self.points} points\n')
-        return (team_info + team_stats)
+        roster_print = str(self.roster)
+        return (team_info + team_stats + roster_print)
 #         return (team_info)
 
 #https://stackoverflow.com/questions/50811101/convert-list-of-class-objects-into-json-in-python-or-django for help with this
@@ -55,8 +56,19 @@ losses with {self.otloss} OT losses for {self.points} points\n')
                     "games_played": self.games_played,
                     "point_percent": self.point_percent,
                     "goal_for": self.goal_for,
-                    "goal_against": self.goal_against
+                    "goal_against": self.goal_against,
+                    "roster": self.roster
                     }
+        
+    def get_roster (self):
+        self.roster = []
+        url = (f'teams/{self.id}?expand=team.roster&season={self.season}')
+        roster_str = read_API (url)
+    #     print (roster ['teams'][0]['roster']['roster'][0])
+        for player in roster_str ['teams'][0]['roster']['roster']: 
+            current_player = player ['person']['id']
+            self.roster.append (current_player)
+        return 
         
 def load_team_info (season):
     leag = []
@@ -98,6 +110,8 @@ def update_team_stats (leag, season):
                
 if __name__ == '__main__':
     NHL_season = '20212022'
+#     roster = get_roster (22, NHL_season)
+#     print (roster)
 
     league = load_team_info (NHL_season) # league is a <class 'list'> of <class 'Team'>
     teams = [team.to_dict() for team in league] # build a list of dicts from your objects
@@ -110,3 +124,6 @@ if __name__ == '__main__':
     json_string = json.dumps ({'teams': teams}, indent=2)  # serialize the whole thing
 #     print (json_string)
     write_json (json_string, f'NHL_teams_{NHL_season}_stats')
+    
+    for team in league:
+        print (team)
