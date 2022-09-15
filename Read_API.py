@@ -12,6 +12,7 @@ base_URL = "https://statsapi.web.nhl.com/api/v1/"
 def read_API(section):
     data = []
     url = base_URL + section
+#     print (url)
     r = requests.get(url)
     if r.status_code != 200:
         return print(f"status code is {r.status_code} for {url}")

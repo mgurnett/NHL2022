@@ -2,10 +2,7 @@
 
 from michael_debug import debug_var
 from json_write import *
-# import pandas as pd
 from Read_API import *
-
-# There will be a team class and player class but no league class for now.
 
 class Team:
     ''' The Team class for a single team '''
@@ -111,5 +108,5 @@ if __name__ == '__main__':
     league = update_team_stats (league, NHL_season) # league is a <class 'list'> of <class 'Team'>
     teams = [team.to_dict() for team in league] # build a list of dicts from your objects
     json_string = json.dumps ({'teams': teams}, indent=2)  # serialize the whole thing
-    print (json_string)
+#     print (json_string)
     write_json (json_string, f'NHL_teams_{NHL_season}_stats')
