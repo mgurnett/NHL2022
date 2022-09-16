@@ -110,8 +110,6 @@ def update_team_stats (leag, season):
                
 if __name__ == '__main__':
     NHL_season = '20212022'
-#     roster = get_roster (22, NHL_season)
-#     print (roster)
 
     league = load_team_info (NHL_season) # league is a <class 'list'> of <class 'Team'>
     teams = [team.to_dict() for team in league] # build a list of dicts from your objects
