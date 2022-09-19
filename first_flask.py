@@ -13,14 +13,15 @@ def index():
 def player():
     league = load_team_info (NHL_season)
     current_team = Team (22, NHL_season)
-    print (current_team)
+    print (current_team.roster)
     for player in current_team.roster:
         try:
-            current_player = Player (player, NHL_season)
+            print_player = Player (player, NHL_season)
         except:
-            print(f"{player} is not an active player")
+            print(f"{print} is not an active player")
         else:
-            return str(current_player)
+            print(str(print_player))
+            return str(print_player)
 
 @app.route ('/teams')
 def teams():

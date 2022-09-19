@@ -43,7 +43,7 @@ class Player:
         self.load_player_data()
 
     def __str__ (self):
-        player_info = (f'{self.first_name} {self.lastName} (#{self.primaryNumber}) {self.primaryPosition_name} \
+        player_info = (f'{self.id} {self.first_name} {self.lastName} (#{self.primaryNumber}) {self.primaryPosition_name} \
 Active:{self.rosterStatus} & is {self.currentAge} years old')
         player_stats = (f'\nHis stats are: {self.points} points (G-{self.goals} & A-{self.assists}) in {self.games} games')
         return player_info + player_stats
