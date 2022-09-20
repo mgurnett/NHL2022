@@ -109,7 +109,7 @@ def get_a_new_player (id, season):
     current_player.alternateCaptain = data_people.get('alternateCaptain')
     current_player.captain = data_people.get('captain')
     current_player.rosterStatus = data_people.get('rosterStatus')
-#     current_player.currentTeam = data_people.get('currentTeam').get('name')
+    current_player.currentTeam = data_people.get('currentTeam').get('name')
     current_player.primaryPosition_name = data_people.get('primaryPosition').get('name')
     current_player.birthDate = data_people.get('birthDate')
     current_player.birthCountry = data_people.get('birthCountry')
