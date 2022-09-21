@@ -2,6 +2,7 @@
 
 # cd ~/Documents/GitHub/NHL2022 && source NHL2022_venv/bin/activate
 # https://gitlab.com/dword4/nhlapi/-/blob/master/stats-api.md#teams
+# https://nhl-api-explorer.herokuapp.com/
 
 import json
 import requests
