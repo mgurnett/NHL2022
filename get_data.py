@@ -27,7 +27,7 @@ class Team ():
         for team in teams ['teams']:
             team_id = team ['id']
             leag.append (team_id)
-        return (leag)
+        return (leag) 
 
 if __name__ == '__main__':
     all_teams = []
@@ -43,7 +43,9 @@ if __name__ == '__main__':
     list_of_teams = pd.concat (all_teams)
     
     #create the HTML
-    html = list_of_teams.to_html(classes='table table-stripped')    
+    html = list_of_teams.to_html(classes='table table-stripped')
+    
+    #save HTML file
     text_file = open("index.html", "w")
     text_file.write(html)
     text_file.close()
