@@ -40,9 +40,9 @@ def table():
 
     df_nested_list = pd.json_normalize(data, record_path =['teams'])
 
-    print (df_nested_list.to_string())
-    html = df_nested_list.to_html()
-    print(html)
+    df_team_info = df_nested_list.drop('roster.roster', axis=1)
+
+    html = df_team_info.to_html(classes='table table-stripped')
     return html
 
 @app.route ('/teams')
