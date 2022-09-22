@@ -14,6 +14,10 @@ class Player ():
         self.bio_url = (f'people/{str(self.id)}')
         self.stats_url = (f'people/{self.id}/stats?stats=statsSingleSeason&season={season}')
         self.get_data ()
+
+    def __str__ (self):
+        player_info = (f'{self.id}')
+        return player_info
     
     def get_data (self):
         data = read_API (self.bio_url)  # get all the bio data for a single player
@@ -22,7 +26,7 @@ class Player ():
         subdata = data['stats'][0]['splits'][0]['stat']
         # player_stats_df = pd.json_normalize(data, record_path =['stats'][0]['splits'][0]['stat']) # get the dataframe for it
         player_stats_df = pd.json_normalize(subdata) # get the dataframe for it
-        print (player_stats_df)
+        # print (player_stats_df)
 
         self.player_df = pd.concat ([player_bio_df, player_stats_df], axis=1, join="inner") # put the bio and stats together
 
@@ -35,8 +39,9 @@ class Player ():
         roster_str = read_API (url_local)
         for p in roster_str ['teams'][0]['roster']['roster']:
             current_player = p ['person']['id']
+            print (p, current_player)
             player = Player (current_player, season)
-            roster.append (player.player_pd)          
+            roster.append (player.player_df)         
         list_of_teams = pd.concat (roster)
         html = list_of_teams.to_html(classes='table table-stripped')
         return (html) #html string
@@ -64,9 +69,9 @@ def write_out_html (html_file):
 
 if __name__ == '__main__':
     # 8478402 Connor McDavid
-    player = Player (8478402, NHL_season)
-    player_html = player.player_html
-    write_out_html (player_html)
+    # player = Player (8478402, NHL_season)
+    # player_html = player.player_html
+    # write_out_html (player_html)
 
-    # roster_html = Player.load_people_info (22, NHL_season)
-    # write_out_html (roster_html)
+    roster_html = Player.load_people_info (22, NHL_season)
+    write_out_html (roster_html)
