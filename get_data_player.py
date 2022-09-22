@@ -4,7 +4,8 @@
 from Read_API import *
 import pandas as pd
 
-NHL_season = '20212022'
+# NHL_season = '20212022'
+NHL_season = '20222023'
 
 class Player ():
     def __init__ (self, id, season):
@@ -22,14 +23,14 @@ class Player ():
     @staticmethod  
     def load_people_info (team_id, season):
         roster = []
-        url_local = (f'teams/{id}?expand=team.roster&season={season}')
+        url_local = (f'teams/{team_id}?expand=team.roster&season={season}')
         roster_str = read_API (url_local)
         for p in roster_str ['teams'][0]['roster']['roster']:
             current_player = p ['person']['id']
             player = Player (current_player, season)
-            roster.append (team.team_pd)          
+            roster.append (player.player_pd)          
         
-        list_of_teams = pd.concat (leag)
+        list_of_teams = pd.concat (roster)
         html = list_of_teams.to_html(classes='table table-stripped')
         
         return (html) #html string
@@ -41,6 +42,9 @@ def write_out_html (html_file):
 
 if __name__ == '__main__':
 #     8478402 Connor McDavid
-    player = Player (8478402, NHL_season)
-    player_html = player.player_html
-    write_out_html (player_html)
+#     player = Player (8478402, NHL_season)
+#     player_html = player.player_html
+#     write_out_html (player_html)
+
+    roster_html = Player.load_people_info (22, NHL_season)
+    write_out_html (roster_html)
