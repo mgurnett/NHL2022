@@ -25,7 +25,7 @@ class Player ():
         data = read_API (self.stats_url)  # get all the stats data for a single player
         subdata = data['stats'][0]['splits'][0]['stat']
         player_stats_df = pd.json_normalize(subdata) # get the dataframe for it
-        # print (player_stats_df)
+        print (player_stats_df)
 
         self.player_df = pd.concat ([player_bio_df, player_stats_df], axis=1, join="inner") # put the bio and stats together
 
@@ -33,17 +33,23 @@ class Player ():
 
     @staticmethod  
     def load_people_info (team_id, season):
-        roster = []
+        roster_ids = []
+        roster_of_players = []
         url_roster = (f'teams/{team_id}?expand=team.roster&season={season}')
         roster_str = read_API (url_roster)
-        for p in roster_str ['teams'][0]['roster']['roster']:
-            roster.append (p ['person']['id'])
-        print (roster)
-        for p in roster:
-            print (p)
-            player = Player (p, season)
-            roster.append (player.player_df)         
-        list_of_teams = pd.concat (roster)
+        for pl in roster_str ['teams'][0]['roster']['roster']:
+            roster_ids.append (pl ['person']['id'])
+        print (roster_ids)
+        for play in roster_ids:
+            print (play)
+            try:
+                player = Player (play, season)
+            except:
+                print (f'{player} has no stats')
+            else:
+                roster_of_players.append (player.player_df)
+                     
+        list_of_teams = pd.concat (roster_of_players)
         html = list_of_teams.to_html(classes='table table-stripped')
         return (html) #html string
         
@@ -69,11 +75,12 @@ def write_out_html (html_file):
     text_file.close()
 
 if __name__ == '__main__':
+
     # 8478402 Connor McDavid
-    # 8469608, 8475156, 8479973
-    player = Player (8469608, NHL_season)
+    
+    player = Player (8479973, NHL_season)
     player_html = player.player_html
     write_out_html (player_html)
 
-    # roster_html = Player.load_people_info (22, NHL_season)
-    # write_out_html (roster_html)
+    roster_html = Player.load_people_info (22, NHL_season)
+    write_out_html (roster_html)
