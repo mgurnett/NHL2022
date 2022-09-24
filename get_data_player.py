@@ -25,7 +25,6 @@ class Player ():
         data = read_API (self.stats_url)  # get all the stats data for a single player
         subdata = data['stats'][0]['splits'][0]['stat']
         player_stats_df = pd.json_normalize(subdata) # get the dataframe for it
-        print (player_stats_df)
 
         self.player_df = pd.concat ([player_bio_df, player_stats_df], axis=1, join="inner") # put the bio and stats together
 
@@ -39,9 +38,7 @@ class Player ():
         roster_str = read_API (url_roster)
         for pl in roster_str ['teams'][0]['roster']['roster']:
             roster_ids.append (pl ['person']['id'])
-        print (roster_ids)
         for play in roster_ids:
-            print (play)
             try:
                 player = Player (play, season)
             except:
