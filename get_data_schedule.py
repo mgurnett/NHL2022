@@ -6,14 +6,14 @@ import pandas as pd
 
 NHL_season = '20212022'
 # NHL_season = '20222023'
+# https://statsapi.web.nhl.com/api/v1/schedule?teamId=22 - base address
+# https://statsapi.web.nhl.com/api/v1/game/id/boxscore - live feed 
 
-class Player ():
-    def __init__ (self, id, season):
-        self.id = id
-        self.season = season
-        self.bio_url = (f'people/{str(self.id)}')
-        self.stats_url = (f'people/{self.id}/stats?stats=statsSingleSeason&season={season}')
-        self.get_data ()
+class Game ():
+    def __init__ (self, game_id):
+        self.id = team_id
+        self.live_url = (f'game/{self.date}/boxscore')
+        self.get_game_data ()
 
     def __str__ (self):
         player_info = (f'{self.id}')
