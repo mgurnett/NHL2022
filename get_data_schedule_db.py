@@ -15,10 +15,10 @@ def get_data (season):
     # get the whole schedule
     number_of_games = schedule_str ['totalGames']
     print (f'Number of games {number_of_games}')
-    # XXX_dates = schedule_str ['dates']
-    # print (XXX_dates)
-    # XXX_games = XXX_dates ['totalGames']
-    # print (XXX_games)
+    XXX_dates = schedule_str ['dates']
+    print (type(XXX_dates))
+    XXX_games = XXX_dates ['totalGames']
+    print (type(XXX_games))
 
     # for g in schedule_str:
     #     # games_df = pd.json_normalize(data, record_path =['dates']['games']) # get the dataframe for it
