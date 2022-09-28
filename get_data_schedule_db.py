@@ -30,7 +30,7 @@ def write_out_html (html_file, name):
 if __name__ == '__main__':
     sched_df = get_data(NHL_season)
     
-#     print ("This is sched_df" , sched_df)
+
     schedule_html = sched_df.to_html(classes='table table-stripped') # convert the df to html
     # print ("This is schedule_html" , schedule_html)
     write_out_html (schedule_html, 'todays_games_new')

@@ -8,21 +8,21 @@ import json
 import requests
 
 Game_status_codes = [
-    {"code": "1", "abstractGameState": "Preview", "detailedState": "Scheduled", "startTimeTBD": false},
-    {"code": "2", "abstractGameState": "Preview", "detailedState": "Pre-Game", "startTimeTBD": false},
-    {"code": "3", "abstractGameState": "Live", "detailedState": "In Progress",  "startTimeTBD": false},
-    {"code": "4", "abstractGameState": "Live", "detailedState": "In Progress - Critical", "startTimeTBD": false},
-    {"code": "5", "abstractGameState": "Final", "detailedState": "Game Over", "startTimeTBD": false},
-    {"code": "6", "abstractGameState": "Final", "detailedState": "Final", "startTimeTBD": false},
-    {"code": "7", "abstractGameState": "Final", "detailedState": "Final", "startTimeTBD": false},
-    {"code": "8", "abstractGameState": "Preview", "detailedState": "Scheduled (Time TBD)", "startTimeTBD": false},
-    {"code": "9", "abstractGameState": "Preview", "detailedState": "Postponed", "startTimeTBD": false} ]
+    {"code": "1", "abstractGameState": "Preview", "detailedState": "Scheduled", "startTimeTBD": False},
+    {"code": "2", "abstractGameState": "Preview", "detailedState": "Pre-Game", "startTimeTBD": False},
+    {"code": "3", "abstractGameState": "Live", "detailedState": "In Progress",  "startTimeTBD": False},
+    {"code": "4", "abstractGameState": "Live", "detailedState": "In Progress - Critical", "startTimeTBD": False},
+    {"code": "5", "abstractGameState": "Final", "detailedState": "Game Over", "startTimeTBD": False},
+    {"code": "6", "abstractGameState": "Final", "detailedState": "Final", "startTimeTBD": False},
+    {"code": "7", "abstractGameState": "Final", "detailedState": "Final", "startTimeTBD": False},
+    {"code": "8", "abstractGameState": "Preview", "detailedState": "Scheduled (Time TBD)", "startTimeTBD": False},
+    {"code": "9", "abstractGameState": "Preview", "detailedState": "Postponed", "startTimeTBD": False} ]
 
 Game_type = [
-    {"id": "PR", "description": "Pre-season", "postseason": false},
-    {"id": "R", "description": "Regular season", "postseason": false},
-    {"id": "P", "description": "Playoffs", "postseason": true},
-    {"id": "A", "description": "All-Star game", "postseason": false}  ]
+    {"id": "PR", "description": "Pre-season", "postseason": False},
+    {"id": "R", "description": "Regular season", "postseason": False},
+    {"id": "P", "description": "Playoffs", "postseason": True},
+    {"id": "A", "description": "All-Star game", "postseason": False}  ]
 
 # Set up the API call variables
 base_URL = "https://statsapi.web.nhl.com/api/v1/"
