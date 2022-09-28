@@ -7,6 +7,23 @@
 import json
 import requests
 
+Game_status_codes = [
+    {"code": "1", "abstractGameState": "Preview", "detailedState": "Scheduled", "startTimeTBD": false},
+    {"code": "2", "abstractGameState": "Preview", "detailedState": "Pre-Game", "startTimeTBD": false},
+    {"code": "3", "abstractGameState": "Live", "detailedState": "In Progress",  "startTimeTBD": false},
+    {"code": "4", "abstractGameState": "Live", "detailedState": "In Progress - Critical", "startTimeTBD": false},
+    {"code": "5", "abstractGameState": "Final", "detailedState": "Game Over", "startTimeTBD": false},
+    {"code": "6", "abstractGameState": "Final", "detailedState": "Final", "startTimeTBD": false},
+    {"code": "7", "abstractGameState": "Final", "detailedState": "Final", "startTimeTBD": false},
+    {"code": "8", "abstractGameState": "Preview", "detailedState": "Scheduled (Time TBD)", "startTimeTBD": false},
+    {"code": "9", "abstractGameState": "Preview", "detailedState": "Postponed", "startTimeTBD": false} ]
+
+Game_type = [
+    {"id": "PR", "description": "Pre-season", "postseason": false},
+    {"id": "R", "description": "Regular season", "postseason": false},
+    {"id": "P", "description": "Playoffs", "postseason": true},
+    {"id": "A", "description": "All-Star game", "postseason": false}  ]
+
 # Set up the API call variables
 base_URL = "https://statsapi.web.nhl.com/api/v1/"
 

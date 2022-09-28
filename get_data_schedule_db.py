@@ -12,7 +12,7 @@ NHL_season = '20222023'
 def get_data (season):
     all_games = []
     # get the whole schedule
-    schedule_dict = read_API (f'schedule?season={season}&date=2022-09-27', print_url=True)  #type dict
+    schedule_dict = read_API (f'schedule?season={season}&date=2022-09-28', print_url=True)  #type dict
     games_list = schedule_dict ['dates'][0]['games']
     for g in games_list:
         games_debug = g #['gamePk'] # get the dataframe for it
