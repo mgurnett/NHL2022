@@ -2,8 +2,11 @@ import pandas as pd
 from flask import Flask
 from PlayerClassSplit import *
 from LeagueClass import *
+from get_data_schedule import *
 
-NHL_season = '20212022'
+# NHL_season = '20212022'
+NHL_season = '20222023'
+
 app = Flask (__name__)
 
 @app.route ('/')
@@ -54,5 +57,10 @@ def teams():
     
     return json_string
 
-if __name__ == '__main__':
-    pass
+@app.route ('/schedule')
+def schedule():
+    sched_df = get_data(season = NHL_season, teamId = 22, print_url=False)
+    schedule_html += sched_df.to_html(classes='mystyle') # convert the df to html
+
+# if __name__ == '__main__':
+#     pass
