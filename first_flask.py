@@ -4,9 +4,8 @@ from PlayerClassSplit import *
 from LeagueClass import *
 from get_data_schedule import *
 
-# NHL_season = '20212022'
-NHL_season = '20222023'
-
+NHL_season = '20212022'
+# NHL_season = '20222023'
 app = Flask (__name__)
 
 @app.route ('/')
@@ -59,8 +58,15 @@ def teams():
 
 @app.route ('/schedule')
 def schedule():
+    schedule_html = '''
+    <html>
+      <head><title>HTML Pandas Dataframe with CSS</title></head>
+      <link rel="stylesheet" type="text/css" href="/df_style.css"/>
+    '''
     sched_df = get_data(season = NHL_season, teamId = 22, print_url=False)
-    schedule_html += sched_df.to_html(classes='mystyle') # convert the df to html
+    schedule_html = sched_df.to_html(classes='mystyle') # convert the df to html
+    
+    return schedule_html
 
 # if __name__ == '__main__':
 #     pass
