@@ -5,18 +5,42 @@
 # from michael_debug import debug_var
 from Read_API import *
 import pandas as pd
+from datetime import date
 
 # NHL_season = '20212022'
 NHL_season = '20222023'
- 
-def get_data (season):
+
+pd.set_option('colheader_justify', 'center')   # FOR TABLE <th>
+
+schedule_html = '''
+<html>
+  <head><title>HTML Pandas Dataframe with CSS</title></head>
+  <link rel="stylesheet" type="text/css" href="df_style.css"/>
+'''
+
+def get_data (print_url = False, **kwargs):
+    modifiers = len (kwargs)
+    
+    if modifiers == 0:
+        schedule_url = (f'schedule')
+    else:
+        mods_url = ""
+        for key, value in kwargs.items():
+            mods_url += str(f'{key}={value}&')
+        schedule_url = (f'schedule?'+mods_url)
+    
+    if print_url == True: #debug issue
+        print (f'The output URL is: {schedule_url}')
+
     all_games = []
-    # get the whole schedule
-    schedule_dict = read_API (f'schedule?season={season}&date=2022-09-28', print_url=True)  #type dict
-    games_list = schedule_dict ['dates'][0]['games']
+
+    schedule_dict = read_API (schedule_url, print_url=False)  #type dict
+    games_list = schedule_dict ['dates']
+    # print (games_list)
     for g in games_list:
-        games_debug = g #['gamePk'] # get the dataframe for it
-        games_df = pd.json_normalize(g) # get the dataframe for it
+        # games_debug = g ['games'][0]['gamePk'] # get the dataframe for it
+        # print (games_debug)
+        games_df = pd.json_normalize(g['games'][0]) # get the dataframe for it
         all_games.append (games_df)
     list_of_games = pd.concat (all_games)
     # print ("This is list_of_games" , list_of_games)
@@ -28,9 +52,20 @@ def write_out_html (html_file, name):
     text_file.close() 
 
 if __name__ == '__main__':
-    sched_df = get_data(NHL_season)
-    
+    # sched_df = get_data(season = NHL_season)
+    # schedule_html += sched_df.to_html(classes='mystyle') # convert the df to html
+    # # print ("This is schedule_html" , schedule_html)
+    # write_out_html (schedule_html, 'todays_games_new1')
 
-    schedule_html = sched_df.to_html(classes='table table-stripped') # convert the df to html
+    today = date.today()
+    d = today.strftime("%Y-%m-%d")
+    
+    sched_df = get_data(date = d)
+    schedule_html += sched_df.to_html(classes='mystyle') # convert the df to html
     # print ("This is schedule_html" , schedule_html)
-    write_out_html (schedule_html, 'todays_games_new')
+    write_out_html (schedule_html, str(f'Games for {d}'))
+
+    # sched_df = get_data(season = NHL_season, teamId = 22, print_url=False)
+    # schedule_html += sched_df.to_html(classes='mystyle') # convert the df to html
+    # # print ("This is schedule_html" , schedule_html)
+    # write_out_html (schedule_html, 'Oilers schedule')
