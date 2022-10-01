@@ -57,11 +57,14 @@ if __name__ == '__main__':
     # # print ("This is schedule_html" , schedule_html)
     # write_out_html (schedule_html, 'todays_games_new1')
 
-    today = date.today()
-    d = today.strftime("%Y-%m-%d")
-    
+    date_str = "2022-09-27"
+    if date_str == None:
+        today = date.today()
+        d = today.strftime("%Y-%m-%d")
+    else: 
+        d = date_str
     sched_df = get_data(date = d)
-    schedule_html += sched_df.to_html(classes='mystyle') # convert the df to html
+    schedule_html = sched_df.to_html(classes='mystyle') # convert the df to html
     # print ("This is schedule_html" , schedule_html)
     write_out_html (schedule_html, str(f'Games for {d}'))
 

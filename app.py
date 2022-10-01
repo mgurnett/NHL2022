@@ -13,7 +13,7 @@ app = Flask (__name__)
 
 @app.route("/")
 def home():
-    return "Hello, Flask!"
+    return render_template("NHL.html")
 
 @app.route("/hello/")
 @app.route("/hello/<name>")
@@ -82,14 +82,20 @@ def teams():
 
 @app.route ('/schedule/<teamId>')
 def schedule(teamId):
-    schedule_html = '''
-    <html>
-      <head><title>HTML Pandas Dataframe with CSS</title></head>
-      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
-    '''
     sched_df = get_data(season = NHL_season, teamId = teamId, print_url=False)
     schedule_html = sched_df.to_html(classes='mystyle') # convert the df to html
-    
+    return schedule_html
+
+@app.route ('/schedule-date/<date_str>')
+@app.route ('/schedule-date')
+def schedule_date(date_str = None): 
+    if date_str == None:
+        today = date.today()
+        d = today.strftime("%Y-%m-%d")
+    else: 
+        d = date_str
+    sched_df = get_data(date = d)
+    schedule_html = sched_df.to_html(classes='mystyle') # convert the df to html
     return schedule_html
 
 # if __name__ == '__main__':
