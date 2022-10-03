@@ -21,9 +21,22 @@ def home():
 def about():
     return render_template("about.html")
 
-@app.route("/contact/")
-def contact():
-    return render_template("contact.html")
+@app.route("/todays_games/")
+def todays_games():
+    return render_template("todays_games.html")
+
+
+@app.route ('/schedule-date/<date_str>')
+@app.route ('/schedule-date')
+def schedule_date(date_str = None): 
+    if date_str == None:
+        today = date.today()
+        d = today.strftime("%Y-%m-%d")
+    else: 
+        d = date_str
+    sched_df = get_data(date = d)
+    schedule_html = sched_df.to_html(classes='mystyle') # convert the df to html
+    return schedule_html
 
 
 @app.route("/hello/")
@@ -78,18 +91,6 @@ def teams():
     json_string = json.dumps ({'teams': teams}, indent=2)  # serialize the whole thing
     
     return json_string
-
-# @app.route ('/schedule')
-# def schedule():
-#     schedule_html = '''
-#     <html>
-#       <head><title>HTML Pandas Dataframe with CSS</title></head>
-#       <link rel="stylesheet" type="text/css" href="/df_style.css"/>
-#     '''
-#     sched_df = get_data(season = NHL_season, teamId = 22, print_url=False)
-#     schedule_html = sched_df.to_html(classes='mystyle') # convert the df to html
-    
-#     return schedule_html
 
 @app.route ('/schedule/<teamId>')
 def schedule(teamId):
