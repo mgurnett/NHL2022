@@ -2,10 +2,12 @@
 
 # https://statsapi.web.nhl.com/api/v1/schedule?season=20222023
 
+from datetime import date
+
+import pandas as pd
+
 # from michael_debug import debug_var
 from Read_API import *
-import pandas as pd
-from datetime import date
 
 # NHL_season = '20212022'
 NHL_season = '20222023'

@@ -1,27 +1,27 @@
-/* includes alternating gray and white with on-hover color */
+.navbar {
+    background-color: lightslategray;
+    font-size: 1em;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: white;
+    padding: 8px 5px 8px 5px;
+}
 
-.message {
+.navbar a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar-brand {
+    font-size: 1.2em;
     font-weight: 600;
-    color: blue;
 }
 
-.mystyle {
-    font-size: 11pt; 
-    font-family: Arial;
-    border-collapse: collapse; 
-    border: 1px solid silver;
-
+.navbar-item {
+    font-variant: small-caps;
+    margin-left: 30px;
 }
 
-.mystyle td, th {
+.body-content {
     padding: 5px;
-}
-
-.mystyle tr:nth-child(even) {
-    background: #E0E0E0;
-}
-
-.mystyle tr:hover {
-    background: silver;
-    cursor: pointer;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

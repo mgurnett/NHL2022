@@ -11,9 +11,20 @@ NHL_season = '20212022'
 # NHL_season = '20222023'
 app = Flask (__name__)
 
+# Replace the existing home function with the one below
 @app.route("/")
 def home():
-    return render_template("NHL.html")
+    return render_template("home.html")
+
+# New functions
+@app.route("/about/")
+def about():
+    return render_template("about.html")
+
+@app.route("/contact/")
+def contact():
+    return render_template("contact.html")
+
 
 @app.route("/hello/")
 @app.route("/hello/<name>")
