@@ -21,11 +21,6 @@ def home():
 def about():
     return render_template("about.html")
 
-@app.route("/todays_games/")
-def todays_games():
-    return render_template("todays_games.html")
-
-
 @app.route ('/schedule-date/<date_str>')
 @app.route ('/schedule-date')
 def schedule_date(date_str = None): 
@@ -34,16 +29,23 @@ def schedule_date(date_str = None):
         d = today.strftime("%Y-%m-%d")
     else: 
         d = date_str
-    sched_df = get_data(date = d)
-    schedule_html = sched_df.to_html(classes='mystyle') # convert the df to html
-    return schedule_html
-
+    sched_df = get_data(date = d, print_url = False)
+    lesser_sched_df = sched_df [['gamePk', 
+                                'gameDate', 
+                                'status.abstractGameState', 
+                                'teams.away.team.name', 
+                                'teams.away.score', 
+                                'teams.home.team.name', 
+                                'teams.home.score', 
+                                'venue.name']]
+    schedule_html = lesser_sched_df.to_html() # convert the df to html
+    return render_template("todays_games.html", table = schedule_html)
 
 @app.route("/hello/")
 @app.route("/hello/<name>")
 def hello_there(name = None):
     return render_template(
-        "hello_there.html",
+        "hello_there.html", 
         name=name,
         date=datetime.now()
     )
@@ -97,7 +99,7 @@ def schedule(teamId):
     sched_df = get_data(season = NHL_season, teamId = teamId, print_url=False)
     schedule_html = sched_df.to_html(classes='mystyle') # convert the df to html
     return schedule_html
-
+'''
 @app.route ('/schedule-date/<date_str>')
 @app.route ('/schedule-date')
 def schedule_date(date_str = None): 
@@ -109,3 +111,4 @@ def schedule_date(date_str = None):
     sched_df = get_data(date = d)
     schedule_html = sched_df.to_html(classes='mystyle') # convert the df to html
     return schedule_html
+'''

@@ -61,14 +61,22 @@ if __name__ == '__main__':
     # # print ("This is schedule_html" , schedule_html)
     # write_out_html (schedule_html, 'todays_games_new1')
 
-    date_str = "2022-10-03"
+    date_str = "2022-10-05"
+    # date_str = None
     if date_str == None:
         today = date.today()
         d = today.strftime("%Y-%m-%d")
     else: 
         d = date_str
     sched_df = get_data(date = d, print_url = False)
-    lesser_sched_df = sched_df [['gamePk', 'gameDate' ]]
+    lesser_sched_df = sched_df [['gamePk', 
+                                'gameDate', 
+                                'status.abstractGameState', 
+                                'teams.away.team.name', 
+                                'teams.away.score', 
+                                'teams.home.team.name', 
+                                'teams.home.score', 
+                                'venue.name']]
     schedule_html = lesser_sched_df.to_html(classes='mystyle') # convert the df to html
 
     # print ("This is schedule_html" , schedule_html)
