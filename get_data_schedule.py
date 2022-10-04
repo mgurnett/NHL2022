@@ -12,14 +12,6 @@ from Read_API import *
 # NHL_season = '20212022'
 NHL_season = '20222023'
 
-pd.set_option('colheader_justify', 'center')   # FOR TABLE <th>
-
-schedule_html = '''
-<html>
-  <head><title>HTML Pandas Dataframe with CSS</title></head>
-  <link rel="stylesheet" type="text/css" href="df_style.css"/>
-'''
-
 def get_data (print_url = False, **kwargs):
     modifiers = len (kwargs)
     
