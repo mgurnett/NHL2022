@@ -16,7 +16,7 @@
   <nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
-        <img src="../static/NHL-Logo.png" alt="Bootstrap" width="60" height="48">
+        <img src="../static/NHL-Logo.png" alt="NHL" width="60" height="48">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -25,13 +25,47 @@
       <div class="collapse navbar-collapse" id="navbarsExample04">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="#">Today</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled">Disabled</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Pacific</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <img src="../static/Oilers_48x48.png" alt="Oilers" width="24" height="24">Oilers</a></li>
+              <li><a class="dropdown-item" href="#">
+                <img src="../static/Flames_48x48.png" alt="Oilers" width="24" height="24">Flames</a></li>
+              <li><a class="dropdown-item" href="#">
+                <img src="../static/Canucks_48x48.png" alt="Oilers" width="24" height="24">Canucks</a></li>
+              <li><a class="dropdown-item" href="#">
+                <img src="../static/Kings_48x48.png" alt="Oilers" width="24" height="24">Kings</a></li>
+              <li><a class="dropdown-item" href="#">
+                <img src="../static/Sharks_48x48.png" alt="Oilers" width="24" height="24">Sharks</a></li>
+              <li><a class="dropdown-item" href="#">
+                <img src="../static/Kraken_48x48.png" alt="Oilers" width="24" height="24">Kraken</a></li>
+              <li><a class="dropdown-item" href="#">
+                <img src="../static/Ducks_48x48.png" alt="Oilers" width="24" height="24">Ducks</a></li>
+              <li><a class="dropdown-item" href="#">
+                <img src="../static/Knights_48x48.png" alt="Oilers" width="24" height="24">Knights</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Central</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Coyots</a></li>
+              <li><a class="dropdown-item" href="#">Blackhawks</a></li>
+              <li><a class="dropdown-item" href="#">Avalanche</a></li>
+              <li><a class="dropdown-item" href="#">Stars</a></li>
+              <li><a class="dropdown-item" href="#">Wild</a></li>
+              <li><a class="dropdown-item" href="#">Predators</a></li>
+              <li><a class="dropdown-item" href="#">Blues</a></li>
+              <li><a class="dropdown-item" href="#">Jets</a></li>
+            </ul>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
@@ -48,10 +82,13 @@
       </div>
     </div>
   </nav>
-  {% block content %}
-  {% endblock %}
+
+  <div class="container">
+    {% block content %}
+    {% endblock %}
+  </div>
 </main>
 
-    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/assets/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

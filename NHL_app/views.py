@@ -50,6 +50,12 @@ def hello_there(name = None):
         date=datetime.now()
     )
 
+@app.route ('/new')
+def new():
+    return render_template(
+        "raw_navbar_example.html"
+    )
+
 @app.route ('/players')
 def players():
     screen = []
