@@ -1,30 +1,94 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>{% block title %}{% endblock %}</title>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css') }}"  />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    </head>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="mgurnett@gmail.com">
+    <title>NHL data</title>
 
-    <body>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-        <div class="navbar">
-            <a href="{{ url_for('home') }}">Home!</a>
-            <a href="{{ url_for('about') }}">About</a>
-            <a href="{{ url_for('schedule_date') }}">Today's games</a>
-        </div>
+    <link href="../static/assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        <div class="body-content">
-            <div class="container">
-                {% block content %}
-                {% endblock %}
-            </div>
-            <hr/>
-            <footer>
-                <p>&copy; 2022</p>
-            </footer>
-        </div>
-    </body>
+  </head>
+  <body>
+    
+<main>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="../static/NHL-Logo.png" alt="NHL" width="60" height="48">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample04">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Today</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled">Disabled</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Pacific</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <img src="../static/Oilers_48x48.png" alt="Oilers" width="24" height="24">Oilers</a></li>
+              <li><a class="dropdown-item" href="#">
+                <img src="../static/Flames_48x48.png" alt="Oilers" width="24" height="24">Flames</a></li>
+              <li><a class="dropdown-item" href="#">
+                <img src="../static/Canucks_48x48.png" alt="Oilers" width="24" height="24">Canucks</a></li>
+              <li><a class="dropdown-item" href="#">
+                <img src="../static/Kings_48x48.png" alt="Oilers" width="24" height="24">Kings</a></li>
+              <li><a class="dropdown-item" href="#">
+                <img src="../static/Sharks_48x48.png" alt="Oilers" width="24" height="24">Sharks</a></li>
+              <li><a class="dropdown-item" href="#">
+                <img src="../static/Kraken_48x48.png" alt="Oilers" width="24" height="24">Kraken</a></li>
+              <li><a class="dropdown-item" href="#">
+                <img src="../static/Ducks_48x48.png" alt="Oilers" width="24" height="24">Ducks</a></li>
+              <li><a class="dropdown-item" href="#">
+                <img src="../static/Knights_48x48.png" alt="Oilers" width="24" height="24">Knights</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Central</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Coyots</a></li>
+              <li><a class="dropdown-item" href="#">Blackhawks</a></li>
+              <li><a class="dropdown-item" href="#">Avalanche</a></li>
+              <li><a class="dropdown-item" href="#">Stars</a></li>
+              <li><a class="dropdown-item" href="#">Wild</a></li>
+              <li><a class="dropdown-item" href="#">Predators</a></li>
+              <li><a class="dropdown-item" href="#">Blues</a></li>
+              <li><a class="dropdown-item" href="#">Jets</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form role="search">
+          <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    {% block content %}
+    {% endblock %}
+  </div>
+</main>
+
+    <script src="../static/assets/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
