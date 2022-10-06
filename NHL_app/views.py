@@ -8,8 +8,13 @@ from . import app
 
 # https://code.visualstudio.com/docs/python/tutorial-flask#_create-and-run-a-minimal-flask-app
 
-NHL_season = '20212022'
-# NHL_season = '20222023'
+# NHL_season = '20212022'
+NHL_season = '20222023'
+
+def write_out_html (html_file, name):
+    text_file = open(f"{name}.html", "w")
+    text_file.write(html_file)
+    text_file.close()
 
 # Replace the existing home function with the one below
 @app.route("/")
@@ -24,12 +29,14 @@ def about():
 @app.route ('/schedule-date/<date_str>')
 @app.route ('/schedule-date')
 def schedule_date(date_str = None): 
+    titles = ['Game ID', 'Date', 'Away', 'Away score', 'Home', 'Home score', 'Venue']
     if date_str == None:
         today = date.today()
         d = today.strftime("%Y-%m-%d")
     else: 
         d = date_str
     sched_df = get_data(date = d, print_url = False)
+    print (sched_df.head)
     lesser_sched_df = sched_df [['gamePk', 
                                 'gameDate', 
                                 'status.abstractGameState', 
@@ -38,12 +45,27 @@ def schedule_date(date_str = None):
                                 'teams.home.team.name', 
                                 'teams.home.score', 
                                 'venue.name']]
-    schedule_html = lesser_sched_df.to_html() # convert the df to html
-    
-    return render_template("todays_games.html", games = schedule_html, 
-    titles = ['Game ID', 'Date', 'Away', 'Away score', 'Home', 'Home score', 'Venue'])
-    # return render_template('todays_games.html', games= lesser_sched_df.to_html(), 
-    # titles = ['Game ID', 'Date', 'Away', 'Away score', 'Home', 'Home score', 'Venue'])
+    print (lesser_sched_df.head)
+    # schedule_html = lesser_sched_df.describe().to_html() # convert the df to html
+
+    # write_out_html (schedule_html, str(f'Games for {d}'))
+    # return render_template("todays_games.html", games = schedule_html, titles = titles)
+    return render_template('todays_games.html', games = lesser_sched_df.to_html(), titles = titles)
+
+@app.route ('/schedule-team/<team_id>')
+def schedule_team(team_id): 
+    sched_df = get_data(season = NHL_season, teamId = team_id, print_url=False)
+
+    lesser_sched_df = sched_df [['gamePk', 
+                                'gameDate', 
+                                'status.abstractGameState', 
+                                'teams.away.team.name', 
+                                'teams.away.score', 
+                                'teams.home.team.name', 
+                                'teams.home.score', 
+                                'venue.name']]
+    schedule_html = lesser_sched_df.to_html(classes='mystyle') # convert the df to html
+    return render_template('team_schedule.html', games = schedule_html.to_html(), titles = titles)
 
 @app.route("/hello/")
 @app.route("/hello/<name>")
@@ -103,16 +125,3 @@ def schedule(teamId):
     sched_df = get_data(season = NHL_season, teamId = teamId, print_url=False)
     schedule_html = sched_df.to_html(classes='mystyle') # convert the df to html
     return schedule_html
-'''
-@app.route ('/schedule-date/<date_str>')
-@app.route ('/schedule-date')
-def schedule_date(date_str = None): 
-    if date_str == None:
-        today = date.today()
-        d = today.strftime("%Y-%m-%d")
-    else: 
-        d = date_str
-    sched_df = get_data(date = d)
-    schedule_html = sched_df.to_html(classes='mystyle') # convert the df to html
-    return schedule_html
-'''
