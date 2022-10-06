@@ -39,7 +39,11 @@ def schedule_date(date_str = None):
                                 'teams.home.score', 
                                 'venue.name']]
     schedule_html = lesser_sched_df.to_html() # convert the df to html
-    return render_template("todays_games.html", table = schedule_html)
+    
+    return render_template("todays_games.html", games = schedule_html, 
+    titles = ['Game ID', 'Date', 'Away', 'Away score', 'Home', 'Home score', 'Venue'])
+    # return render_template('todays_games.html', games= lesser_sched_df.to_html(), 
+    # titles = ['Game ID', 'Date', 'Away', 'Away score', 'Home', 'Home score', 'Venue'])
 
 @app.route("/hello/")
 @app.route("/hello/<name>")
@@ -48,12 +52,6 @@ def hello_there(name = None):
         "hello_there.html", 
         name=name,
         date=datetime.now()
-    )
-
-@app.route ('/new')
-def new():
-    return render_template(
-        "raw_navbar_example.html"
     )
 
 @app.route ('/players')

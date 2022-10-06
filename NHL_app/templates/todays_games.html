@@ -3,6 +3,18 @@
 Today's games
 {% endblock %}
 {% block content %}
+<!--
 <p>These are the games for today</p>
-<div>{{table|safe}}</div>
+<div>{{games|safe}}</div>
+-->
+    <div>
+        <h1>Today's games</h1>
+        {% for title in titles %}
+            <th>{{ title }}</th>
+        {% endfor %}
+        {% for game in games %}
+
+            {{ game | safe }}
+        {% endfor %}
+    </div>
 {% endblock %}
