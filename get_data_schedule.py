@@ -30,7 +30,7 @@ def get_data (print_url = False, **kwargs):
 
     schedule_dict = read_API (schedule_url, print_url=False)  #type dict
     games_list = schedule_dict ['dates'][0]['games']
-    # print (f'This is the games list {games_list}')
+    print (f'This is the games list {games_list}')
 
     for g in games_list:
         # print (f'This is g - {g}')
@@ -39,7 +39,7 @@ def get_data (print_url = False, **kwargs):
         games_df = pd.json_normalize(g) # get the dataframe for it
         all_games.append (games_df)
     list_of_games = pd.concat (all_games)
-    # print ("This is list_of_games" , list_of_games)
+    print ("This is list_of_games" , list_of_games)
     return list_of_games
 
 def write_out_html (html_file, name):
@@ -53,28 +53,28 @@ if __name__ == '__main__':
     # # print ("This is schedule_html" , schedule_html)
     # write_out_html (schedule_html, 'todays_games_new1')
 
-    date_str = "2022-10-05"
-    # date_str = None
-    if date_str == None:
-        today = date.today()
-        d = today.strftime("%Y-%m-%d")
-    else: 
-        d = date_str
-    sched_df = get_data(date = d, print_url = False)
-    lesser_sched_df = sched_df [['gamePk', 
-                                'gameDate', 
-                                'status.abstractGameState', 
-                                'teams.away.team.name', 
-                                'teams.away.score', 
-                                'teams.home.team.name', 
-                                'teams.home.score', 
-                                'venue.name']]
-    schedule_html = lesser_sched_df.to_html(classes='mystyle') # convert the df to html
+    # date_str = "2022-10-05"
+    # # date_str = None
+    # if date_str == None:
+    #     today = date.today()
+    #     d = today.strftime("%Y-%m-%d")
+    # else: 
+    #     d = date_str
+    # sched_df = get_data(date = d, print_url = False)
+    # lesser_sched_df = sched_df [['gamePk', 
+    #                             'gameDate', 
+    #                             'status.abstractGameState', 
+    #                             'teams.away.team.name', 
+    #                             'teams.away.score', 
+    #                             'teams.home.team.name', 
+    #                             'teams.home.score', 
+    #                             'venue.name']]
+    # schedule_html = lesser_sched_df.to_html(classes='mystyle') # convert the df to html
 
-    # print ("This is schedule_html" , schedule_html)
-    write_out_html (schedule_html, str(f'Games for {d}'))
-
-    # sched_df = get_data(season = NHL_season, teamId = 22, print_url=False)
-    # schedule_html += sched_df.to_html(classes='mystyle') # convert the df to html
     # # print ("This is schedule_html" , schedule_html)
-    # write_out_html (schedule_html, 'Oilers schedule')
+    # write_out_html (schedule_html, str(f'Games for {d}'))
+
+    sched_df = get_data(season = NHL_season, teamId = 22, print_url=False)
+    schedule_html = sched_df.to_html(classes='mystyle') # convert the df to html
+    # print ("This is schedule_html" , schedule_html)
+    write_out_html (schedule_html, 'Oilers schedule')
