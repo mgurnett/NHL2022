@@ -2,10 +2,7 @@
 
 from michael_debug import debug_var
 from json_write import *
-# import pandas as pd
 from Read_API import *
-
-# There will be a team class and player class but no league class for now.
 
 class Team:
     ''' The Team class for a single team '''
@@ -29,13 +26,15 @@ class Team:
         self.goal_for = 0
         self.goal_against = 0
         self.roster = []
-#         self.get_roster ()
+        self.get_roster ()
+#         self.team_stats ()
 
     def __str__ (self):
         team_info = (f'{self.name} of the {self.division} who play in {self.venue} in the {self.season} season.\n')
         team_stats = (f'They have have played {self.games_played} games with {self.win} wins and {self.loss} \
 losses with {self.otloss} OT losses for {self.points} points\n')
-        return (team_info + team_stats)
+        roster_print = str(self.roster)
+        return (team_info + team_stats + roster_print)
 #         return (team_info)
 
 #https://stackoverflow.com/questions/50811101/convert-list-of-class-objects-into-json-in-python-or-django for help with this
@@ -57,38 +56,38 @@ losses with {self.otloss} OT losses for {self.points} points\n')
                     "games_played": self.games_played,
                     "point_percent": self.point_percent,
                     "goal_for": self.goal_for,
-                    "goal_against": self.goal_against
+                    "goal_against": self.goal_against,
+                    "roster": self.roster
                     }
         
-class AllTeams:
-    def __init__ (self, season):
-        self.season = season
-        self.allteams = self.load_team_info (self.season)
+    def get_roster (self):
+        self.roster = []
+        url = (f'teams/{self.id}?expand=team.roster&season={self.season}')
+        roster_str = read_API (url)
+    #     print (roster ['teams'][0]['roster']['roster'][0])
+        for player in roster_str ['teams'][0]['roster']['roster']: 
+            current_player = player ['person']['id']
+            self.roster.append (current_player)
+        return 
         
-    def load_team_info (self, season):
-        leag = []
-        url = (f'teams?season={season}')
-        teams = read_API (url)
-            
-        for team in teams ['teams']:
-            team_id = team ['id']
-            current_team = Team (team_id, season)
-            current_team.name = team ['name']
-            current_team.abbreviation = team ['abbreviation']
-            current_team.teamName = team ['teamName']
-            current_team.locationName = team ['locationName']
-            current_team.shortName = team ['shortName']
-            current_team.division = team ['division']['name']
-            current_team.venue = team ['venue']['name']
-    #         print (current_team, type(current_team))
-            teams_dict = current_team.to_dict()
-            leag.append (teams_dict)
-        json_string = json.dumps ({'teams': leag}, indent=2)  # serialize the whole thing
-        print (type(json_string ))
-        return (json_string)
-
-    
-    
+def load_team_info (season):
+    leag = []
+    url = (f'teams?season={season}')
+    teams = read_API (url)
+        
+    for team in teams ['teams']:
+        team_id = team ['id']
+        current_team = Team (team_id, season)
+        current_team.name = team ['name']
+        current_team.abbreviation = team ['abbreviation']
+        current_team.teamName = team ['teamName']
+        current_team.locationName = team ['locationName']
+        current_team.shortName = team ['shortName']
+        current_team.division = team ['division']['name']
+        current_team.venue = team ['venue']['name']
+        leag.append (current_team)
+#         print (current_team, type(current_team))
+    return (leag)
         
 def update_team_stats (leag, season):
 
@@ -111,23 +110,18 @@ def update_team_stats (leag, season):
                
 if __name__ == '__main__':
     NHL_season = '20212022'
-    
-    league = AllTeams (NHL_season)
-    write_json (league, f'NHL_teams_{NHL_season}_info')
-    
-    '''
 
     league = load_team_info (NHL_season) # league is a <class 'list'> of <class 'Team'>
     teams = [team.to_dict() for team in league] # build a list of dicts from your objects
     json_string = json.dumps ({'teams': teams}, indent=2)  # serialize the whole thing
 #     print (json_string)
-
+    write_json (json_string, f'NHL_teams_{NHL_season}_info')
     
     league = update_team_stats (league, NHL_season) # league is a <class 'list'> of <class 'Team'>
     teams = [team.to_dict() for team in league] # build a list of dicts from your objects
     json_string = json.dumps ({'teams': teams}, indent=2)  # serialize the whole thing
-    
-    print (json_string)
+#     print (json_string)
     write_json (json_string, f'NHL_teams_{NHL_season}_stats')
     
-    '''
+    for team in league:
+        print (team)

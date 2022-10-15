@@ -1,8 +1,8 @@
 import pandas as pd
 from flask import Flask, render_template
 from datetime import datetime
-from PlayerClassSplit import *
-from LeagueClass import *
+# from PlayerClassSplit import *
+# from LeagueClass import *
 from get_data_schedule import *
 from . import app
 
@@ -16,18 +16,9 @@ def write_out_html (html_file, name):
     text_file.write(html_file)
     text_file.close()
 
-# Replace the existing home function with the one below
-@app.route("/")
-def home():
-    return render_template("home.html")
-
-# New functions
-@app.route("/about/")
-def about():
-    return render_template("about.html")
-
 @app.route ('/schedule-date/<date_str>')
 @app.route ('/schedule-date')
+@app.route ('/')
 def schedule_date(date_str = None): 
     titles = ['Game ID', 'Date', 'Away', 'Away score', 'Home', 'Home score', 'Venue']
     if date_str == None:
@@ -68,50 +59,6 @@ def schedule_team(team_id):
     # schedule_html = lesser_sched_df.to_html(classes='mystyle') # convert the df to html
     return render_template('todays_games.html', games = lesser_sched_df.to_html(classes='mystyle'), titles = titles)
 
-@app.route("/hello/")
-@app.route("/hello/<name>")
-def hello_there(name = None):
-    return render_template(
-        "hello_there.html", 
-        name=name,
-        date=datetime.now()
-    )
-
-@app.route ('/players')
-def players():
-    screen = []
-    league = load_team_info (NHL_season)
-    current_team = Team (22, NHL_season)
-    print (current_team.roster)
-    for player in current_team.roster:
-        try:
-#             print_player = Player (player, NHL_season)
-            print_player = get_a_new_player (player, NHL_season)
-        except:
-            print(f"{player} is not an active player")
-        else:
-            print(str(print_player))
-            screen.append (str(print_player))
-    return str(screen)
-
-@app.route ('/player')
-def player():
-    player = get_a_new_player (8478402, NHL_season)
-    return str(player)
-
-@app.route ('/table')
-def table():
-    sub_url = f'teams/{22}?expand=team.roster&season={NHL_season}'
-
-    data = read_API (sub_url)
-
-    df_nested_list = pd.json_normalize(data, record_path =['teams'])
-
-    df_team_info = df_nested_list.drop('roster.roster', axis=1)
-
-    html = df_team_info.to_html(classes='table table-stripped')
-    return html
-
 @app.route ('/teams')
 def teams():
     league = load_team_info (NHL_season) # league is a <class 'list'> of <class 'Team'>
@@ -120,9 +67,3 @@ def teams():
     json_string = json.dumps ({'teams': teams}, indent=2)  # serialize the whole thing
     
     return json_string
-
-@app.route ('/schedule/<teamId>')
-def schedule(teamId):
-    sched_df = get_data(season = NHL_season, teamId = teamId, print_url=False)
-    schedule_html = sched_df.to_html(classes='mystyle') # convert the df to html
-    return schedule_html
